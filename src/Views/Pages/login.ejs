@@ -1,0 +1,23 @@
+<h2>Logowanie</h2>
+
+<br>
+
+<% if (errorMessage) { %>
+    <p style="color: red;"><%= errorMessage %></p>
+<% } %>
+
+<div style="display: flex; flex-direction: column; background-color: none;">
+    <form action="/login" method="POST">
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" name="username" required>
+
+        <br><br>
+        
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required>
+
+        <br><br>
+        
+        <button type="submit">Zaloguj się</button>
+    </form>
+</div>
