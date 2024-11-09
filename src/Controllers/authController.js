@@ -1,9 +1,12 @@
 const path = "../Views/Pages";
+const { checkUserCredentials } = require("../Services/userService");
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
+
     const {username, password } = req.body;
-    
-    if(username != "user1")
+    const isValidUser = await checkUserCredentials(username, password);
+
+    if(!isValidUser)
     {
         res.render(`${path}/login`, {layout: false, errorMessage: "Podano nieprawidłowy login lub hasło!"});
         return;
