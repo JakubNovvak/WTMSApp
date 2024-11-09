@@ -1,8 +1,8 @@
-const UserRepository = require("../Repositories/userRepository");
+const { addNewUser, getAllUsers } = require("../Services/userService");
 
 exports.getAllUsers = async (req, res) => {
 
-    const users = await UserRepository.getAllUsers();
+    const users = await getAllUsers();
 
     res.status(200).send(users);
 }
@@ -10,12 +10,7 @@ exports.getAllUsers = async (req, res) => {
 exports.addUser = async (req, res) => {
     try 
     {
-        const userData = {
-            username: req.body.username,
-            password: req.body.password
-        };
-
-        const newUser = await UserRepository.addUser(userData);
+        const newUser = await addNewUser(req.body);
         res.status(201).json({message: "Użytkownik został dodany", user: newUser});
 
     } 

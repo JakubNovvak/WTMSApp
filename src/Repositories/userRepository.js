@@ -2,41 +2,28 @@ const User = require('../Models/userModel');
 
 class UserRepository 
 {
-    static async getAllUsers()
+    static async findAllUsers()
     {
-        try {
-            
-            const users = await User.findAll();
-            return users;
-        } 
-        catch (error) 
-        {
-            throw new error('Nie udało się pobrać wszystkich użytkowników.');
-        }
+        const users = await User.findAll();
+        return users;
     }
 
     static async findById(id)
     {
-        try {
-
-            const user = await User.findByPk(id);
-            return user;
-
-        } catch (error) {
-            throw new error('Error retrieving user by ID.');
-        }
+        const user = await User.findByPk(id);
+        return user;
     }
 
     static async findByUsername(username)
     {
         const searchedUser = await User.findOne({where: {username: username}});
-
         return searchedUser;
     }
 
-    static async addUser(userData)
+    static async createUser(userData)
     {
         const newUser = await User.create(userData);
+        return newUser;
     }
 }
 

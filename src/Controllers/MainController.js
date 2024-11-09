@@ -1,7 +1,10 @@
+const { getUserByUsername } = require("../Services/userService");
+
 const path = "../Views/Pages";
 
-exports.showHomePage = (req, res) => {
-    res.render(`${path}/index`, {username: req.session.username});
+exports.showHomePage = async (req, res) => {
+    const user = await getUserByUsername(req.session.username);
+    res.render(`${path}/index`, {username: user.name + " " + user.surname});
 }
 
 exports.showShiftPage = (req, res) => {
