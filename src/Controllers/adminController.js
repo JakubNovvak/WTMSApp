@@ -1,6 +1,7 @@
 const { getUserByUsername } = require("../Services/userService");
 const { addNewUser, getAllUsers, updateUserInfo } = require("../Services/userService");
 const { getAllUserShifts, updateShiftInfo } = require('../Services/shiftService');
+const { changeToLocalTimeZone } = require('../Miscellaneous/changeToLocalTimeZone');
 const path = "../Views/Admin";
 
 // --- Widok Strony Głównej
@@ -71,6 +72,7 @@ exports.showManageShiftsPage = async (req, res) => {
         // Jeżeli userId jest w zapytaniu, pobierz zmiany dla tego użytkownika
         if (userId) {
             shifts = await getAllUserShifts(userId);
+            shifts.forEach(shift => { changeToLocalTimeZone(shift)});
             shifts.reverse();
         }
 
