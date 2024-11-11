@@ -46,6 +46,15 @@ exports.showAddUserPage = async (req, res) => {
 
 exports.addNewUser = async (req, res) => {
     try {
+
+        const allUsers = await getAllUsers();
+
+        if(allUsers.find(user => user.username === req.body.username))
+        {
+            res.render(`${path}/addUser`, { layout: false, errorMessage: 'Użytkownik o podanym loginie już istnieje.' });
+            return;
+        }
+
         const newUser = await addNewUser(req.body);
 
         if (newUser) {
