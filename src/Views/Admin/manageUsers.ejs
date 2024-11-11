@@ -1,0 +1,62 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTMS - Panel admina</title>
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include('../Partial/adminNavbar')%>
+    
+    <div style="margin-left: 20px;">
+        <h2>Edycja użytkowników</h2>
+
+        <% if (message) { %>
+            <p><%= message %></p>
+            <a href="/admin/manageUsers"><button>Odśwież</button></a>
+        <% } %>
+
+    <br>
+
+    <% if(users.length != 0) {%>
+        <table class="table" style="max-width: 1000px;">
+            <tr>
+                <th>Login</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Stawka godzinowa (zł) </th>
+                <th>Akcja</th>
+            </tr>
+
+            <% users.forEach(user => { %>
+                <tr>
+                    <form action="/admin/editUser/<%= user.id %>" method="POST">
+                        <td>
+                            <input type="text" class="form-control" name="username" value="<%= user.username %>" required>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="name" value="<%= user.name %>" required>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="surname" value="<%= user.surname %>" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="hourlyPay" value="<%= user.hourlyPay %>" required>
+                        </td>
+                        <td>
+                            <button class="btn btn-dark" type="submit">Zatwierdź</button>
+                        </td>
+                    </form>
+                </tr>
+            <% }) %>
+        </table>
+    <% } %>
+    </div>
+
+    
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

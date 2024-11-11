@@ -1,0 +1,32 @@
+<h1>Twoje godziny pracy</h1>
+
+<br>
+<br>
+
+<!-- Shifts date form -->
+<form action="/api/shifts/viewForm/" method="POST">
+    <label for="date">Select Date:</label>
+    <div style="display: flex; flex-direction: row;">
+      <input class="form-control" style="max-width: 200px; margin-right: 10px;" type="date" id="date" name="selectedDate" value="<%= selectedDate %>">
+      <button class="btn btn-dark" type="submit">Wyświetl godziny</button>
+    </div>
+  </form>
+
+<br>
+
+<% if (!(hours == 0 && minutes == 0)) { %>
+  <p style="color: green;"> Czas przepracowany: <%= hours %> godz. i <%= minutes %> min.</p>
+<% } %>
+
+<br>
+
+  <!-- Lista zmian z danego dnia -->
+  <% if (shifts && shifts.length > 0) { %>
+    <ul>
+      <% shifts.forEach(shift => { %>
+        <li>Zmiana od <%= shift.startTime %> do <%= shift.endTime == null ? "teraz" : shift.endTime %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p style="color: red;"><%= errorMessage %></p>
+  <% } %>

@@ -1,0 +1,58 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTMS - Panel admina</title>
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include('../Partial/adminNavbar')%>
+    
+    <div style="margin-left: 20px;">
+        <h2>Dodawanie nowego użytkownika</h2>
+
+        <br>
+
+        <% if (errorMessage) { %>
+            <p><%= errorMessage %></p>
+        <% } %>
+
+        <!-- Formularz dodawania użytkownika -->
+        <form action="/admin/addUser" method="POST">
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="name">Imię:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="surname">Nazwisko:</label>
+                <input type="text" class="form-control" id="surname" name="surname" required>
+            </div>
+
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="hourlyPay">Stawka godzinowa:</label>
+                <input type="number" class="form-control" id="hourlyPay" name="hourlyPay" required>
+            </div>
+
+            <br>
+
+            <button class="btn btn-dark" type="submit">Dodaj Użytkownika</button>
+        </form>
+    </div>
+
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

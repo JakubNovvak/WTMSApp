@@ -1,0 +1,45 @@
+<h1>Oblicz swoje wynagrodzenie</h1>
+
+<br>
+<br>
+
+ <form id="salaryForm" onsubmit="redirectToSalary(event)">
+    <label for="month">Select month:</label>
+    <div style="display: flex; flex-direction: row;">
+        <input class="form-control" style="max-width: 200px; margin-right: 10px;" type="month" id="month" name="month" required>
+        <button class="btn btn-dark" type="submit">Oblicz wynagrodzenie</button>
+    </div>
+</form>
+
+<br>
+<br>
+
+<% if (summary) { %>
+    <h2 style="font-weight: 400; margin-bottom: 20px;">Podsumowanie na miesiąc <%= monthFullName %></h2>
+    <p>W tym miesiącu przepracowałeś: <%= summary.hoursWorked %> godz.</p>
+    <p>Wynagrodzenie: <%= summary.salary.toFixed(2) %> zł</p>
+<% } %>
+
+<br>
+
+<div style="display: flex; flex-direction: row;">
+    <% if(summary) { %>
+        <a style="margin-right: 15px;" href="/api/download-csv/<%= userId %>/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w CSV</a>
+    <% } %>
+    
+    <% if(summary) { %>
+        <a href="/api/download-json/<%= userId %>/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w JSON</a>
+    <% } %>
+</div>
+
+<!-- ---------------------------------- -->
+
+<script>
+    function redirectToSalary(event) {
+        event.preventDefault();
+        const month = document.getElementById("month").value;
+
+        if (month) 
+            window.location.href = `/calculate-salary/${month}`;
+    }
+</script>
