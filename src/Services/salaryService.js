@@ -18,7 +18,7 @@ class SalaryService {
     
                 const roundedHours = calculateRoundedHours(start, end);
                 
-                // Konwertujemy zaokrąglone godziny na minuty
+                // Konwertuje zaokrąglone godziny na minuty
                 totalMinutes += roundedHours * 60;
             }
         });
@@ -85,11 +85,10 @@ class SalaryService {
             zakres_godzinowy: "",
         });
     
-        // Wybór formatu na podstawie parametru 'format' używając switch-case
         switch (fileType) {
             case FileType.JSON:
                 return JSON.stringify({
-                    dni_miesiaca: reportData.slice(0, -1), // dni miesiąca bez podsumowania
+                    dni_miesiaca: reportData.slice(0, -1),
                     lacznie: totalHours.toFixed(2)
                 }, null, 4);
             
@@ -104,7 +103,7 @@ class SalaryService {
     }
 }
 
-// Funkcja do wyliczania pełnych godzin, zaokrąglając minuty do pełnej godziny od 45 minut wzwyż
+// --- Funkcja do wyliczania pełnych godzin, zaokrąglając minuty do pełnej godziny od 45 minut wzwyż
 function calculateRoundedHours(startTime, endTime) {
     const start = moment(startTime, "HH:mm");
     const end = moment(endTime, "HH:mm");

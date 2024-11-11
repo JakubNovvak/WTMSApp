@@ -10,7 +10,7 @@ exports.showHomePage = async (req, res) => {
     res.render(`${path}/home`, { layout: false });
 }
 
-// --- Widok Strony Głównej
+// --- Widok Strony Zarządzani Użytkownikami
 exports.showManageUserPage = async (req, res) => {
     try 
     {
@@ -23,7 +23,7 @@ exports.showManageUserPage = async (req, res) => {
     }
 }
 
-// --- Widok Strony Głównej
+// --- Endpoint od edytowania użytkownika
 exports.editUser = async (req, res) => {
     const userId = req.params.userId;
 
@@ -38,7 +38,7 @@ exports.editUser = async (req, res) => {
     }
 }
 
-// --- Widok Strony Głównej
+// --- Widok Strony od Dodawania Użytkownika
 exports.showAddUserPage = async (req, res) => {
     const user = await getUserByUsername(req.session.username);
     res.render(`${path}/addUser`, { layout: false, errorMessage: null });
@@ -59,7 +59,7 @@ exports.addNewUser = async (req, res) => {
     }
 }
 
-// --- Widok Strony Głównej
+// --- Widok Strony Zarzązania Zmianami Użytkownika
 exports.showManageShiftsPage = async (req, res) => {
     try 
     {
@@ -69,7 +69,6 @@ exports.showManageShiftsPage = async (req, res) => {
         const userId = req.params.userId;
         let shifts = [];
 
-        // Jeżeli userId jest w zapytaniu, pobierz zmiany dla tego użytkownika
         if (userId) {
             shifts = await getAllUserShifts(userId);
             shifts.forEach(shift => { changeToLocalTimeZone(shift)});
@@ -91,6 +90,7 @@ exports.showManageShiftsPage = async (req, res) => {
     }
 }
 
+// --- Endpoint od edytowania zmiany
 exports.editShift = async (req, res) => {
     const shiftId = req.params.shiftId;
     try {

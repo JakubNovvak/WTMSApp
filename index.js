@@ -12,10 +12,10 @@ const salaryRoutes = require('./src/Routes/salaryRoutes');
 const adminRoutes = require('./src/Routes/adminRoutes');
 const downloadRoutes = require('./src/Routes/downloadRoutes');
 
-// --- załadaowanie bazy danych
+// --- Załadaowanie bazy danych
 const sequelize = require('./src/Data/dbContext');
 
-// --- serowanie plików statycznych z folderu node_modules
+// --- Serowanie plików statycznych z folderu node_modules
 //      związane z bootstrapem zainstalowanym poprzez npm
 app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
@@ -27,7 +27,7 @@ app.use(express.static('public'));
 const sessionMiddleware = require('./src/Middleware/sessionMiddleware');
 app.use(sessionMiddleware);
 
-// --- konfiguracja silnika szablonów EJS
+// --- Konfiguracja silnika szablonów EJS
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('views', path.join(__dirname, './src/Views'));
@@ -48,7 +48,7 @@ sequelize.sync()
   });
 
 
-// --- Routing
+// --- Załadowanie Routingu
 app.use('/', mainRoutes);
 app.use('/', authRoutes);
 app.use('/', salaryRoutes);

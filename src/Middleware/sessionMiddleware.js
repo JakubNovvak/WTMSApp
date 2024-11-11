@@ -1,5 +1,6 @@
 const session = require('express-session');
 
+// --- Middleware zajmujące się sesją
 const sessionMiddleware = session({
   secret: 'your-secret-key',
   resave: false,

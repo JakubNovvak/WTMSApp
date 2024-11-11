@@ -1,6 +1,7 @@
 const path = "../Views/Pages";
 const { checkUserCredentials } = require("../Services/userService");
 
+// --- Endpoint obsługujący logowanie
 exports.login = async (req, res) => {
 
     const {username, password } = req.body;
@@ -24,6 +25,7 @@ exports.login = async (req, res) => {
     res.redirect("/");
 }
 
+// --- Endpoint obsługujący wylogowanie
 exports.logout = (req, res) => {
     req.session.destroy();
     res.redirect('/login');

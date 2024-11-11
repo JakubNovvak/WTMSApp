@@ -6,7 +6,12 @@ const FileType = require('../Miscellaneous/FileType');
 
 exports.showSalaryCalculatorPage = (req, res) => 
 {
-    res.render(`${path}/calculateSalary`, { selectedMonth: null, summary: null, monthFullName: null });
+    try {
+        res.render(`${path}/calculateSalary`, { selectedMonth: null, summary: null, monthFullName: null });
+    } catch (error) 
+    {
+        res.status(500).json({ message: "Błąd podczas otwierania strony z kalkulatorem wynagrodzenia." });
+    }
 };
 
 exports.calculateSalary = async (req, res) => {
@@ -25,7 +30,7 @@ exports.calculateSalary = async (req, res) => {
 exports.downloadMonthlyShiftCsv = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const month = req.params.month; // --- Zakładamy format YYYY-MM
+        const month = req.params.month;
         const csvData = await generateMonthlyShiftReport(userId, month, FileType.CSV);
 
         res.header("Content-Type", "text/csv");
@@ -41,14 +46,12 @@ exports.downloadMonthlyShiftCsv = async (req, res) => {
 exports.downloadMonthlyShiftJson = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const month = req.params.month; // --- Zakładamy format YYYY-MM
+        const month = req.params.month; 
         const jsonData = await generateMonthlyShiftReport(userId, month, FileType.JSON);
 
-        // Ustawienie nagłówka Content-Type na aplikację JSON
         res.header("Content-Type", "application/json");
         res.attachment(`raport_${MonthsMap[month.slice(-2)].toLowerCase()}_${month.slice(0, 4)}.json`);
         
-        // Wysłanie danych JSON jako plik
         return res.send(jsonData);
     } catch (error) {
         console.log(error);

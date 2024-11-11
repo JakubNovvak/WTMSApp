@@ -3,6 +3,7 @@ const { getUserIdByCredentials } = require("../Services/userService");
 const { changeToLocalTimeZone } = require('../Miscellaneous/changeToLocalTimeZone');
 const path = "../Views/Pages";
 
+// --- Endpoint od pośredniczący - przenosi dane z POST do widoku
 exports.showUpdatedShiftsPage = async (req, res) => {
     try 
     {
@@ -25,18 +26,7 @@ exports.showUpdatedShiftsPage = async (req, res) => {
     }
 }
 
-exports.getAllUserShifts = async (req, res) => {
-    try 
-    {
-        const shifts = await getAllUserShifts(req.params.userId);
-        res.status(200).json({message: "Pomyślnie zaciągnięto zmiany użytkownika", shifts: shifts});
-
-    } catch (error) 
-    {
-        res.status(400).json({message: "Wsytąpił problem podczas pobierania listy zmian", shifts: []});
-    }
-}
-
+// --- Dodanie pełnej zmiany dla użytkownika
 exports.addNewShift = async (req, res) => {
     try 
     {
@@ -49,6 +39,7 @@ exports.addNewShift = async (req, res) => {
     }
 }
 
+// --- Endpoint od ropoczęcia nowej zmiany
 exports.startCurrentShift = async (req, res) => {
 
     const startTime = new Date().toISOString().slice(11, 16);
@@ -67,6 +58,7 @@ exports.startCurrentShift = async (req, res) => {
     }
 }
 
+// --- Endpoint od zakończenia nowej zmiany
 exports.endCurrentShift = async (req, res) => {
 
     const endTime = new Date().toISOString().slice(11, 16);
@@ -88,6 +80,20 @@ exports.endCurrentShift = async (req, res) => {
 
 // ------------------------------ Pozostałe endpointy ------------------------------
 
+// --- Endpoint od pobrania wszystkich zmian użytkownika
+exports.getAllUserShifts = async (req, res) => {
+    try 
+    {
+        const shifts = await getAllUserShifts(req.params.userId);
+        res.status(200).json({message: "Pomyślnie zaciągnięto zmiany użytkownika", shifts: shifts});
+
+    } catch (error) 
+    {
+        res.status(400).json({message: "Wsytąpił problem podczas pobierania listy zmian", shifts: []});
+    }
+}
+
+// --- Endpoint od pobrania wszystkich zmian zalogowanego użytkownika
 exports.getLoggedInDateShifts = async (req, res) => {
     try 
     {
@@ -99,9 +105,4 @@ exports.getLoggedInDateShifts = async (req, res) => {
     {
         res.status(500).json({message: "Wystąpił błąd z wczytaniem danych z bazy.", shift: null});
     }
-}
-
-exports.getUserDateShifts = async (req, res) => {
-    //TODO: Implement user data fetching by admin
-    res.status(500).json({message: "Endpoint not implementet yet."});
 }

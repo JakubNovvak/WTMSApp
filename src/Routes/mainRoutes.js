@@ -5,10 +5,10 @@ const router = express.Router();
 const mainController = require('../Controllers/mainController');
 const authMiddleware = require('../Middleware/authMiddleware');
 
-// --- public routes
+// --- publiczne
 router.get('/login', mainController.showLoginPage);
 
-//--- logged in routes
+//--- dla zalogowanych
 router.get('/', authMiddleware.isLoggedIn, mainController.showHomePage);
 router.get('/shifts', authMiddleware.isLoggedIn, mainController.showHoursPage);
 router.get('/manage-shift', authMiddleware.isLoggedIn, mainController.showShiftPage);

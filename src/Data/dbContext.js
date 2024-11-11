@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 
-// Konfiguracja bazy danych
+// --- Konfiguracja bazy danych
 const sequelize = new Sequelize({
-  dialect: 'sqlite',  // Możesz użyć również np. 'mysql', 'postgres', etc.
-  storage: './database.sqlite',  // Określenie lokalizacji pliku bazy SQLite
+  dialect: 'sqlite',
+  storage: './database.sqlite',
 });
 
 module.exports = sequelize;

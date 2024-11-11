@@ -30,7 +30,7 @@ const Shift = sequelize.define('Shift', {
     Shift.belongsTo(models.User, { foreignKey: 'userId' });
   };
 
-  //Synchronizacja Modelu z bazą danych - tworzenie tabeli, jeżeli nie istnieje
+  // --- Synchronizacja Modelu z bazą danych - tworzenie tabeli, jeżeli nie istnieje
 
 Shift.sync({force: false})
 .then(() => {

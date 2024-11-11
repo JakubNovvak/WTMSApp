@@ -1,5 +1,6 @@
 const { addNewUser, getAllUsers, getUserIdByCredentials } = require("../Services/userService");
 
+// --- Pobranie użytkownika po Id
 exports.getUserId = async (req, res) => {
 
     try 
@@ -13,6 +14,7 @@ exports.getUserId = async (req, res) => {
     }
 }
 
+// --- Pobranie listy wszystkich użytkowników
 exports.getAllUsers = async (req, res) => {
 
     try 
@@ -22,10 +24,11 @@ exports.getAllUsers = async (req, res) => {
 
     } catch (error) 
     {
-        res.status(500).send(error);
+        res.status(500).send("Nie udało się pobrać listy użytkowników.");
     }
 }
 
+// --- Dodanie użytkownika
 exports.addUser = async (req, res) => {
     try 
     {
