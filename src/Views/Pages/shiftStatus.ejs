@@ -1,10 +1,11 @@
 <h1>Status twojej zmiany</h1>
 
+<!-- Komunikat o nieprawidłowej dacie -->
+<p style="color: red;"><%- errorMessage.replace(/\n/g, '<br>') %></p>
+
 <% if (!ongoingShift) { %>
-    <!-- Button to start a shift -->
-
     <br>
-
+    <!-- Przycisk rozpoczynający -->
     <form action="/api/shifts/start" method="post">
         <button class="btn btn-dark" type="submit">Rozpocznij zmianę</button>
     </form>

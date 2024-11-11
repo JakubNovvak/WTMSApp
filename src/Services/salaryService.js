@@ -11,7 +11,11 @@ class SalaryService {
         
         let totalMinutes = 0;
     
-        shifts.forEach(shift => {
+        const filteredShifts = shifts.filter(
+            shift => shift.endTime !== null
+        );
+
+        filteredShifts.forEach(shift => {
             if (shift.endTime) {
                 const start = shift.startTime;
                 const end = shift.endTime;

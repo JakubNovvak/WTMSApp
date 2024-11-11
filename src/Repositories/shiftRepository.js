@@ -18,9 +18,14 @@ class ShiftRepository
         return await Shift.findAll({ where: { userId, date } });
     }
 
-    static async findOngoingShift(userId) 
+    static async findOngoingShifts(userId) 
     {
-        return await Shift.findOne({ where: { userId, endTime: null } });
+        return await Shift.findAll({ where: { userId, endTime: null } });
+    }
+
+    static async findOngoingShiftToday(userId, today) 
+    {
+        return await Shift.findOne({ where: { userId, endTime: null, date: today} });
     }
 
     static async updateShiftEndTime(shiftId, endTime) 

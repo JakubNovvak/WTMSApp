@@ -1,4 +1,4 @@
-const { createShift, updateShiftEndTime, findUserShifts, findOngoingShift, findShiftById, updateShift } = require("../Repositories/shiftRepository");
+const { createShift, updateShiftEndTime, findUserShifts, findOngoingShiftToday, findShiftById, updateShift } = require("../Repositories/shiftRepository");
 const { getUserIdByCredentials } = require("./userService");
 const moment = require('moment-timezone');
 
@@ -16,8 +16,6 @@ class ShiftService {
     static async getAllUserShifts(userId)
     {
         const foundShifts = await findUserShifts(userId);
-
-        console.log(foundShifts);
 
         if(foundShifts == null)
             return [];
@@ -63,7 +61,9 @@ class ShiftService {
 
     static async startNewShift(userId, startTime)
     {
-        const ongoingShift = await findOngoingShift(userId);
+        const today = new Date().toISOString().slice(0, 10);
+
+        const ongoingShift = await findOngoingShiftToday(userId, today);
         if (!ongoingShift) {
             await createShift({ userId, date: new Date().toISOString().slice(0, 10), startTime });
         }
@@ -71,7 +71,9 @@ class ShiftService {
 
     static async updateShiftEndTime(userId, endTime)
     {
-        const ongoingShift = await findOngoingShift(userId);
+        const today = new Date().toISOString().slice(0, 10);
+
+        const ongoingShift = await findOngoingShiftToday(userId, today);
         if (ongoingShift) {
             await updateShiftEndTime(ongoingShift.id, endTime);
         }
@@ -101,7 +103,8 @@ class ShiftService {
             const updatedData = {
                 date: requestBody.date,
                 startTime: moment.tz(requestBody.startTime, 'HH:mm', 'Europe/Warsaw').utc().format('HH:mm'),
-                endTime: moment.tz(requestBody.endTime, 'HH:mm', 'Europe/Warsaw').utc().format('HH:mm')
+                endTime: requestBody.endTime ? moment.tz(requestBody.endTime, 'HH:mm', 'Europe/Warsaw').utc().format('HH:mm')
+                                             : null
             };
 
             const updatedShift = updateShift(shiftId, updatedData);
