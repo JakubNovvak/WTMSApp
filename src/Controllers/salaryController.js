@@ -7,7 +7,7 @@ const FileType = require('../Miscellaneous/FileType');
 exports.showSalaryCalculatorPage = (req, res) => 
 {
     try {
-        res.render(`${path}/calculateSalary`, { selectedMonth: null, summary: null, monthFullName: null });
+        res.render(`${path}/calculateSalary`, { userId: 0, selectedMonth: null, summary: null, monthFullName: null });
     } catch (error) 
     {
         res.status(500).json({ message: "Błąd podczas otwierania strony z kalkulatorem wynagrodzenia." });
@@ -18,8 +18,9 @@ exports.calculateSalary = async (req, res) => {
     const selectedMonth = req.params.selectedMonth;
 
     try {
+        const userId = await getUserIdByCredentials(req.session.username);
         const summary = await calculateMonthlySalary(req.session.username, selectedMonth);
-        res.render(`${path}/calculateSalary`, { selectedMonth, summary, monthFullName: MonthsMap[selectedMonth.slice(-2)] });
+        res.render(`${path}/calculateSalary`, { userId, selectedMonth, summary, monthFullName: MonthsMap[selectedMonth.slice(-2)] });
 
     } catch (error) 
     {

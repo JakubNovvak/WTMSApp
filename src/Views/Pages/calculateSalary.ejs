@@ -24,11 +24,11 @@
 
 <div style="display: flex; flex-direction: row;">
     <% if(summary) { %>
-        <a style="margin-right: 15px;" href="/api/download-csv/1/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w CSV</a>
+        <a style="margin-right: 15px;" href="/api/download-csv/<%= userId %>/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w CSV</a>
     <% } %>
     
     <% if(summary) { %>
-        <a href="/api/download-json/1/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w JSON</a>
+        <a href="/api/download-json/<%= userId %>/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w JSON</a>
     <% } %>
 </div>
 
