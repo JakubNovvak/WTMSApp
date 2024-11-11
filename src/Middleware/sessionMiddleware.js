@@ -5,7 +5,8 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false                  
+    secure: false,
+    maxAge: 60 * 60 * 1000             
   }
 });
 

@@ -20,6 +20,11 @@ const User = sequelize.define('User', {
   surname: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  hourlyPay: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 28.10
   }
 }, {
   tableName: 'Users'
@@ -27,7 +32,7 @@ const User = sequelize.define('User', {
 
 //Synchronizacja Modelu z bazą danych - tworzenie tabeli, jeżeli nie istnieje
 
-User.sync({force: true})
+User.sync({force: false})
   .then(() => {
     console.log("Tabela userów została zsynchornizowana.");
   })

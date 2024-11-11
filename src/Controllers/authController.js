@@ -15,6 +15,12 @@ exports.login = async (req, res) => {
     req.session.isLoggedIn = true;
     req.session.username = username;
 
+    if(username === "Admin")
+    {
+        res.redirect("/admin/");
+        return;
+    }
+
     res.redirect("/");
 }
 

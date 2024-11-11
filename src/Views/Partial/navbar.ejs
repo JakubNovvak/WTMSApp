@@ -2,12 +2,9 @@
     <ul style="display: flex; flex-direction: row; justify-content: space-between; width: 35vw;">
         <li><a href="/">Strona główna</a></li>
         <li><a href="/manage-shift">Status pracy</a></li>
-        <li><a href="/hours">Godziny pracy</a></li>
+        <li><a href="/shifts">Godziny pracy</a></li>
         <li><a href="/calculate-salary">Kalkulacja wynagrodzenia</a></li>
-        <% if (isAdmin) { %>
-            <li><a href="/admin/add-user">Dodaj użytkownika</a></li>
-            <li><a href="/admin/change-hourly-rate">Zmień stawkę godzinową</a></li>
-        <% } %>
         <li><a href="/logout">Wyloguj się</a></li>
     </ul>
 </nav>
+<hr>

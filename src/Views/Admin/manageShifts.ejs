@@ -1,0 +1,69 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <%- include('../Partial/adminNavbar')%>
+    
+    <h2>Manage Shifts</h2>
+
+    <form action="/manageShifts/" method="get" onsubmit="redirectToUserShifts(event)">
+        <label for="userId">Wybierz użytkownika:</label>
+        <select name="userId" id="userId">
+            <option value="">-- Wybierz użytkownika --</option>
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>" <%= selectedUserId == user.id ? 'selected' : '' %>>
+                    <%= user.username %>
+                </option>
+            <% }) %>
+        </select>
+        <button type="submit">Zatwierdź</button>
+    </form>
+
+    <% if (message && shifts.length == 0) { %>
+        <p><%= message %></p>
+        <a href="/admin/manageShifts"><button>Odśwież</button></a>
+    <% } %>
+
+<!-- Wyświetlanie listy zmian użytkownika, jeśli został wybrany -->
+    <% if (selectedUserId && shifts.length > 0) { %>
+        <h2>Zmiany użytkownika</h2>
+        <ul>
+            <% shifts.forEach(shift => { %>
+                <li>
+                    <form action="/admin/manageShifts/editShift/<%= shift.id %>" method="post">
+                        <label>Data:</label>
+                        <input type="date" name="date" value="<%= shift.date %>">
+                        
+                        <label>Godzina rozpoczęcia:</label>
+                        <input type="time" name="startTime" value="<%= shift.startTime %>">
+                        
+                        <label>Godzina zakończenia:</label>
+                        <input type="time" name="endTime" value="<%= shift.endTime %>">
+                        
+                        <button type="submit">Zatwierdź</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else if (selectedUserId && !message) { %>
+        <p>Brak zmian do wyświetlenia dla wybranego użytkownika.</p>
+    <% } %>
+
+</body>
+</html>
+
+<!-- ---------------------------------- -->
+
+<script>
+    function redirectToUserShifts(event) {
+        event.preventDefault();
+        const userId = document.getElementById('userId').value;
+        if (userId) {
+            window.location.href = `/admin/manageShifts/${userId}`;
+        }
+    }
+</script>

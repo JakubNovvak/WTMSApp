@@ -1,1 +1,31 @@
 <h1>Status twojej zmiany</h1>
+
+<% if (!ongoingShift) { %>
+    <!-- Button to start a shift -->
+    <form action="/api/shifts/start" method="post">
+        <button type="submit">Rozpocznij zmianę</button>
+    </form>
+<% } else { %>
+    <!-- Display ongoing shift and time worked -->
+    <p>Zmiana rozpoczęta o: <%= ongoingShift.startTime %></p>
+    
+
+    <!-- Button to end the ongoing shift -->
+    <form action="/api/shifts/end" method="post">
+        <button type="submit">Zakończ zmianę</button>
+    </form>
+<% } %>
+
+<br><br><br>
+
+<h2>Dzisiejsze zmiany</h2>
+<% if (shifts.length === 0) { %>
+    <p>Brak zmian dzisiejszego dnia.</p>
+<% } else { %>
+    <ul>
+        <% shifts.forEach(shift => { %>
+            <li>Od <%= shift.startTime %> - do <%= shift.endTime == null ? "teraz" : shift.endTime %></li>
+        <% }) %>
+    </ul>
+    <p style="color: green;">Przepracowano łącznie: <%= hours %> godz. i <%= minutes %> min.</p>
+<% } %>

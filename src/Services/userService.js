@@ -1,4 +1,4 @@
-const { findByUsername, createUser, findAllUsers } = require("../Repositories/userRepository");
+const { findByUsername, createUser, findAllUsers, findById, updateUser } = require("../Repositories/userRepository");
 
 class UserService 
 {
@@ -21,18 +21,22 @@ class UserService
 
     static async getUserByUsername(username)
     {
-        try 
-        {
-            const searchedUser = await findByUsername(username);
+        const searchedUser = await findByUsername(username);
 
-            if(searchedUser == null)
-                throw new Error("");
+        if(searchedUser == null)
+            throw new Error("");
 
-            return searchedUser;
-        } catch (error) 
-        {
-            console.error("Nie udało pobrać informacji na temat użytkownika", error);
-        }
+        return searchedUser;
+    }
+
+    static async getUserIdByCredentials(username)
+    {
+        const searchedUser = await findByUsername(username);
+
+        if(searchedUser == null)
+            throw new Error("");
+
+        return searchedUser.get('id');
     }
 
     static async checkUserCredentials(userLogin, userPassword) 
@@ -44,7 +48,7 @@ class UserService
         if(user == null)
             return false;
 
-        if(user.username != userLogin && user.password != userPassword)
+        if(user.username != userLogin || user.password != userPassword)
             return false;
 
         return true;
@@ -57,6 +61,7 @@ class UserService
             password: requestBody.password,
             name: requestBody.name,
             surname: requestBody.surname,
+            hourlyPay: requestBody.hourlyPay
         }
 
         try 
@@ -67,6 +72,26 @@ class UserService
         } catch (error) 
         {
             console.error("Nie udało się utworzyć nowego użytkownika", error);
+        }
+    }
+
+    static async updateUserInfo(userId, requestBody) {
+        try {
+            const updatedData = {
+                username: requestBody.username,
+                name: requestBody.name,
+                surname: requestBody.surname,
+                hourlyPay: requestBody.hourlyPay
+            };
+
+            const updatedUser = updateUser(userId, updatedData);
+
+            if(!updatedUser)
+                throw new Error("Nie znaleziono użytkownika o zadanym id.");
+
+        } catch (error) {
+            console.error("Nie udało się zaktualizować użytkownika", error);
+            throw error;
         }
     }
 }

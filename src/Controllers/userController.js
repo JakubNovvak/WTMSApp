@@ -1,10 +1,29 @@
-const { addNewUser, getAllUsers } = require("../Services/userService");
+const { addNewUser, getAllUsers, getUserIdByCredentials } = require("../Services/userService");
+
+exports.getUserId = async (req, res) => {
+
+    try 
+    {
+        const userId = await getUserIdByCredentials(req.params.username);
+        res.status(200).json({message: "Pomyślnie uzyskano id użytkownika", userId: userId});
+
+    } catch (error) 
+    {
+        res.status(500).json({message: "Nie udało się uzyskać id", userId: -1});
+    }
+}
 
 exports.getAllUsers = async (req, res) => {
 
-    const users = await getAllUsers();
+    try 
+    {
+        const users = await getAllUsers();
+        res.status(200).send(users);    
 
-    res.status(200).send(users);
+    } catch (error) 
+    {
+        res.status(500).send(error);
+    }
 }
 
 exports.addUser = async (req, res) => {
@@ -16,6 +35,7 @@ exports.addUser = async (req, res) => {
     } 
     catch (error) 
     {
+        console.log(error);
         res.status(500).json({ message: 'Błąd przy tworzeniu użytkownika', error: error.message });
     }    
 }

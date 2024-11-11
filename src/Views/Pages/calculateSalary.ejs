@@ -1,1 +1,37 @@
-<h1>Oblicz swoją wypłate</h1>
+<h1>Oblicz swoje wynagrodzenie</h1>
+
+ <form id="salaryForm" onsubmit="redirectToSalary(event)">
+    <label for="month">Select month:</label>
+    <input type="month" id="month" name="month" required>
+    <button type="submit">Oblicz wynagrodzenie</button>
+</form>
+
+<% if (summary) { %>
+    <h2>Podsumowanie na miesiąc <%= monthFullName %></h2>
+    <p>W tym miesiącu przepracowałeś: <%= summary.hoursWorked %> godz.</p>
+    <p>Wynagrodzenie: <%= summary.salary.toFixed(2) %> zł</p>
+<% } %>
+
+<br>
+
+<% if(summary) { %>
+    <a href="/api/download-csv/1/<%= selectedMonth %>" class="btn btn-primary">Pobierz raport miesięczny w CSV</a>
+<% } %>
+
+<br>
+
+<% if(summary) { %>
+    <a href="/api/download-json/1/<%= selectedMonth %>" class="btn btn-primary">Pobierz raport miesięczny w JSON</a>
+<% } %>
+
+<!-- ---------------------------------- -->
+
+<script>
+    function redirectToSalary(event) {
+        event.preventDefault();
+        const month = document.getElementById("month").value;
+
+        if (month) 
+            window.location.href = `/calculate-salary/${month}`;
+    }
+</script>

@@ -25,6 +25,13 @@ class UserRepository
         const newUser = await User.create(userData);
         return newUser;
     }
+
+    static async updateUser(userId, updatedData)
+    {
+        const updatedUser = await User.findByPk(userId);
+        await updatedUser.update(updatedData);
+        return updatedUser;
+    }
 }
 
 module.exports = UserRepository;

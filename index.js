@@ -3,32 +3,42 @@ const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
+const path = require('path');
 const mainRoutes = require('./src/Routes/mainRoutes');
 const authRoutes = require('./src/Routes/authRoutes');
 const userRoutes = require('./src/Routes/userRoutes');
+const shiftRoutes = require('./src/Routes/shiftRoutes');
+const salaryRoutes = require('./src/Routes/salaryRoutes');
+const adminRoutes = require('./src/Routes/adminRoutes');
+const downloadRoutes = require('./src/Routes/downloadRoutes');
+
+// --- załadaowanie bazy danych
 const sequelize = require('./src/Data/dbContext');
-const sessionMiddleware = require('./src/Middleware/sessionMiddleware');
+
+// --- serowanie plików statycznych z folderu node_modules
+//      związane z bootstrapem zainstalowanym poprzez npm
+app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const path = require('path');
 app.use(express.static('public'));
 
-// --- Cookies 
+// --- Sesja użytkownika
+const sessionMiddleware = require('./src/Middleware/sessionMiddleware');
 app.use(sessionMiddleware);
 
-// --- EJS engine configuration
+// --- konfiguracja silnika szablonów EJS
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('views', path.join(__dirname, './src/Views'));
 app.set()
 
 
-// --- Setting main layout
+// --- Ustawienie głównego layoutu w widokach
 app.set('layout', path.join(__dirname, './src/Views/Shared/layout'));
 
 
-// --- Tabels synchronization
+// --- Synchronizacja tabel
 sequelize.sync()
   .then(() => {
     console.log('Baza danych została zsynchronizowana');
@@ -41,7 +51,11 @@ sequelize.sync()
 // --- Routing
 app.use('/', mainRoutes);
 app.use('/', authRoutes);
-app.use('/api', userRoutes);
+app.use('/', salaryRoutes);
+app.use('/admin/', adminRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/shifts', shiftRoutes);
+app.use('/api/', downloadRoutes);
 
 
 app.listen(3000, () => {
