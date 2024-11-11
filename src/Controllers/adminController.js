@@ -14,7 +14,8 @@ exports.showManageUserPage = async (req, res) => {
     try 
     {
         const users = await getAllUsers();
-        res.render(`${path}/manageUsers`, { layout: false, users: users, message: null });
+        const filteredUsers = users.filter(user => user.username !== "Admin");
+        res.render(`${path}/manageUsers`, { layout: false, users: filteredUsers, message: null });
     } catch (error) {
         console.error('Błąd podczas pobierania użytkowników:', error);
         res.render(`${path}/manageUsers`, { layout: false, users: [], message: 'Nie udało się pobrać listy użytkowników.' });
@@ -70,6 +71,7 @@ exports.showManageShiftsPage = async (req, res) => {
         // Jeżeli userId jest w zapytaniu, pobierz zmiany dla tego użytkownika
         if (userId) {
             shifts = await getAllUserShifts(userId);
+            shifts.reverse();
         }
 
         console.log("> ", userId);

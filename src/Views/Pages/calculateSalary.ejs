@@ -1,28 +1,36 @@
 <h1>Oblicz swoje wynagrodzenie</h1>
 
+<br>
+<br>
+
  <form id="salaryForm" onsubmit="redirectToSalary(event)">
     <label for="month">Select month:</label>
-    <input type="month" id="month" name="month" required>
-    <button type="submit">Oblicz wynagrodzenie</button>
+    <div style="display: flex; flex-direction: row;">
+        <input class="form-control" style="max-width: 200px; margin-right: 10px;" type="month" id="month" name="month" required>
+        <button class="btn btn-dark" type="submit">Oblicz wynagrodzenie</button>
+    </div>
 </form>
 
+<br>
+<br>
+
 <% if (summary) { %>
-    <h2>Podsumowanie na miesiąc <%= monthFullName %></h2>
+    <h2 style="font-weight: 400; margin-bottom: 20px;">Podsumowanie na miesiąc <%= monthFullName %></h2>
     <p>W tym miesiącu przepracowałeś: <%= summary.hoursWorked %> godz.</p>
     <p>Wynagrodzenie: <%= summary.salary.toFixed(2) %> zł</p>
 <% } %>
 
 <br>
 
-<% if(summary) { %>
-    <a href="/api/download-csv/1/<%= selectedMonth %>" class="btn btn-primary">Pobierz raport miesięczny w CSV</a>
-<% } %>
-
-<br>
-
-<% if(summary) { %>
-    <a href="/api/download-json/1/<%= selectedMonth %>" class="btn btn-primary">Pobierz raport miesięczny w JSON</a>
-<% } %>
+<div style="display: flex; flex-direction: row;">
+    <% if(summary) { %>
+        <a style="margin-right: 15px;" href="/api/download-csv/1/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w CSV</a>
+    <% } %>
+    
+    <% if(summary) { %>
+        <a href="/api/download-json/1/<%= selectedMonth %>" class="btn btn-dark">Pobierz raport miesięczny w JSON</a>
+    <% } %>
+</div>
 
 <!-- ---------------------------------- -->
 

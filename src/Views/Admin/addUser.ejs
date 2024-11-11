@@ -2,40 +2,57 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTMS - Panel admina</title>
+    <link rel="stylesheet" href="/static/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <%- include('../Partial/adminNavbar')%>
     
-    <h2>Dodawanie nowego użytkownika</h2>
+    <div style="margin-left: 20px;">
+        <h2>Dodawanie nowego użytkownika</h2>
 
-    <br>
+        <br>
 
+        <% if (errorMessage) { %>
+            <p><%= errorMessage %></p>
+        <% } %>
 
-    <% if (errorMessage) { %>
-        <p><%= errorMessage %></p>
-    <% } %>
+        <!-- Formularz dodawania użytkownika -->
+        <form action="/admin/addUser" method="POST">
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
 
-    <!-- Formularz dodawania użytkownika -->
-    <form action="/admin/addUser" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="name">Imię:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-        <label for="name">Imię:</label>
-        <input type="text" id="name" name="name" required>
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="surname">Nazwisko:</label>
+                <input type="text" class="form-control" id="surname" name="surname" required>
+            </div>
 
-        <label for="surname">Nazwisko:</label>
-        <input type="text" id="surname" name="surname" required>
+            <div style="display: flex; flex-direction: column; max-width: 300px; margin-bottom: 20px;">
+                <label for="hourlyPay">Stawka godzinowa:</label>
+                <input type="number" class="form-control" id="hourlyPay" name="hourlyPay" required>
+            </div>
 
-        <label for="hourlyPay">Stawka godzinowa:</label>
-        <input type="number" id="hourlyPay" name="hourlyPay" required>
+            <br>
 
-        <button type="submit">Dodaj Użytkownika</button>
-    </form>
+            <button class="btn btn-dark" type="submit">Dodaj Użytkownika</button>
+        </form>
+    </div>
 
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

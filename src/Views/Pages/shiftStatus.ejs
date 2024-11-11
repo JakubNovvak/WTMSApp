@@ -2,17 +2,21 @@
 
 <% if (!ongoingShift) { %>
     <!-- Button to start a shift -->
+
+    <br>
+
     <form action="/api/shifts/start" method="post">
-        <button type="submit">Rozpocznij zmianę</button>
+        <button class="btn btn-dark" type="submit">Rozpocznij zmianę</button>
     </form>
 <% } else { %>
     <!-- Display ongoing shift and time worked -->
+    <br>
     <p>Zmiana rozpoczęta o: <%= ongoingShift.startTime %></p>
     
-
+    <br>
     <!-- Button to end the ongoing shift -->
     <form action="/api/shifts/end" method="post">
-        <button type="submit">Zakończ zmianę</button>
+        <button class="btn btn-dark" type="submit">Zakończ zmianę</button>
     </form>
 <% } %>
 
